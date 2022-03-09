@@ -9,7 +9,7 @@ from django.utils.translation import gettext as _
 from pydantic import Field
 
 from iamheadless_publisher_admin.pydantic_models import BaseItemPydanticModel, BaseItemDataPydanticModel, BaseItemContentsPydanticModel
-from iamheadless_file_handling import utils as iamheadless_file_handling_utils
+from iamheadless_file_handling import utils as iamheadless_file_handling_utils, get_file_name
 
 from .conf import settings
 from . import forms
@@ -129,7 +129,7 @@ class DocumentPydanticModel(BaseItemPydanticModel):
             file_index = file_index.replace(f'-file', '')
             file_index = int(file_index)
             try:
-                validated_data['data']['contents'][file_index]['file_name'] = make_file_name(tenant_id, file[1].name)
+                validated_data['data']['contents'][file_index]['file_name'] = get_file_name(tenant_id, file[1].name)
             except IndexError:
                 pass
         return validated_data
@@ -160,11 +160,6 @@ class DocumentPydanticModel(BaseItemPydanticModel):
         for content in contents:
             delete_file(content['file_name'])
         return validated_data
-
-
-def make_file_name(tenant_id, file_name):
-    prefix = str(uuid.uuid4()).split('-')[-1]
-    return f'/{tenant_id}/{prefix}-{file_name}'
 
 
 def upload_file(file, file_name):
