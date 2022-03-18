@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class IamheadlessPublisherAdminDocumentConfig(AppConfig):
+class IamheadlessPublisherAdminDocumentsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'iamheadless_publisher_admin_document'
+    name = 'iamheadless_publisher_admin_documents'
