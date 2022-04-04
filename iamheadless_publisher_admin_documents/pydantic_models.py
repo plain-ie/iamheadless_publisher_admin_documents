@@ -73,6 +73,16 @@ class DocumentPydanticModel(BaseItemPydanticModel):
         _display_content = DocumentPydanticModel.get_display_content(_contents, self._primary_language)
         return _display_content['file_name']
 
+    #
+
+    @classmethod
+    def viewsets(cls):
+        return [
+            f'{settings.APP_NAME}.viewsets.DocumentCreateViewSet',
+            f'{settings.APP_NAME}.viewsets.DocumentDeleteViewSet',
+            f'{settings.APP_NAME}.viewsets.DocumentRetrieveUpdateViewSet',
+        ]
+
     @classmethod
     def get_item_type(cls, data):
         return data['item_type']
